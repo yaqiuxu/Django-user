@@ -15,7 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from user.views.home import home
+from user.views.userRegister import registerUser, activate
+from user.views.userLogin import userLogin
 
 urlpatterns = [
+    path("", home),
     path("admin/", admin.site.urls),
+    path("home/", home),
+    path("login/", userLogin),
+    path("register/", registerUser),
+    path("activate/<uidb64>/<token>", activate, name='activate')
 ]

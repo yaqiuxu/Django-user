@@ -15,6 +15,24 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 
+### To Test locally
+command line:
+```
+mysql -u root -p
+// enter your password
+```
+Create your database:
+```
+create database [database name, example: DKDH_user] DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
+```
+other commands:
+```
+show databases;
+use [database name];
+show tables;
+```
+Also, you can use MySQLWorkbench to see your local testing data.
+
 ### run the Django development server
 ```
 python3 manage.py runserver

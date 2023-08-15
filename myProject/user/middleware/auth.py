@@ -7,7 +7,8 @@ class AuthMiddleware(MiddlewareMixin):
         
         print("request.path_info", request.path_info)
         # 0. the pages that need no authentication
-        if request.path_info in ["/login/", "/userLogin/", "/register/", "/registerUser/"]:
+        if request.path_info in ["/login/", "/activate/", "/register/", "/favicon.ico"]:
+            print("return...")
             return
 
         # 1. read current user's session. If session exists, then the user is already logged in

@@ -8,6 +8,9 @@ from django.utils.encoding import force_bytes, force_str
 from django.core.mail import EmailMessage
 from user.userForm import UserForm
 from user.models import UserInfo
+from sparkpost import SparkPost
+from django.http import HttpResponseRedirect
+
 
 """
     includes email activation
@@ -43,9 +46,8 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         
-        return JsonResponse({'success': True, 'message': 'Email confirmation successfull.'})
+        return HttpResponseRedirect('http://localhost:3000/')
     return JsonResponse({'success': False, 'message': 'Activation invalid.'})
-
 
 def sendEmailActivateLink(request, user):
     mail_subject = "Please activate your user account."
@@ -59,10 +61,23 @@ def sendEmailActivateLink(request, user):
         }
     )
     print("message", message)
+
     try: 
-        email = EmailMessage(mail_subject, message, to=[user.email])
-        email.send()
-        return JsonResponse({'success': True, 'message': 'please activate your email.'})
+        # 你的SparkPost API密钥
+        sp = SparkPost('0cce3a0b7ea7d58f4ca86f19425774b37d79cf6c')
+        
+        response = sp.transmissions.send(
+            use_sandbox=False,  # 如果你要在SparkPost的沙盒环境中测试，设为True
+            recipients=[user.email],
+            html=message,
+            from_email='dkdh_test@paradx.dev',  # 您的发件人地址
+            subject=mail_subject
+        )
+
+        if response['total_accepted_recipients'] > 0:
+            return JsonResponse({'success': True, 'message': 'please activate your email.'})
+        else:
+            return JsonResponse({'success': False, 'message': 'Failed to send email.'})
     except Exception as e:
         error_message = str(e)
         return JsonResponse({'success': False, 'message': error_message})

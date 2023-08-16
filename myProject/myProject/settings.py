@@ -79,11 +79,10 @@ WSGI_APPLICATION = "myProject.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": 'DKDH_user',
+        "NAME": 'scholar_test',
         "USER": "root",
-        "PASSWORD": "password",
         "HOST": "127.0.0.1",
-        "PORT": "3306",
+        "PORT": "3307",
     }, 
     'mongodb': {
         'ENGINE': 'djongo',

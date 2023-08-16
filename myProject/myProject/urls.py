@@ -18,6 +18,7 @@ from django.urls import path
 from user.views.home import home
 from user.views.userRegister import registerUser, activate
 from user.views.userLogin import userLogin
+from user.views.userStatus import userStatus
 
 urlpatterns = [
     path("", home),
@@ -25,5 +26,6 @@ urlpatterns = [
     path("home/", home),
     path("login/", userLogin),
     path("register/", registerUser),
-    path("activate/<uidb64>/<token>", activate, name='activate')
+    path("activate/<uidb64>/<token>", activate, name='activate'),
+    path("userStatus/", userStatus),
 ]
